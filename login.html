@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+<body>
+    <div id="loginForm" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeButton">&times;</span>
+            <h2 style="text-align: center;">Login</h2>
+            <form id="myForm" action="#" method="post">
+                <label class="d" for="username">Username:</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your username">
+                <label class="d" for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                <input class="submit6" type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("loginButton").addEventListener("click", function() {
+            var loginForm = document.getElementById("loginForm");
+            loginForm.style.display = "block";
+        });
+
+        document.getElementById("closeButton").addEventListener("click", function() {
+            var loginForm = document.getElementById("loginForm");
+            loginForm.style.display = "none";
+        });
+    </script>
+</body></html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exams Details</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add some basic CSS styles for the navbar */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+
+            background-color: #5f0099;
+            word-spacing: 5px;
+            /* Background color of the navbar */
+            overflow: hidden;
+            /* To clear floats */
+        }
+
+        .navbar a {
+
+            /* Float the navigation links to the left */
+            display: block;
+            /* Display them as block elements (one per line) */
+            color: white;
+            /* Text color */
+            text-align: center;
+            /* Center-align the text */
+            padding: 6px 5px;
+            /* Add some padding to each link */
+            text-decoration: none;
+            /* Remove underlines from links */
+        }
+
+        /* Change color when you hover over the links */
+        .navbar a:hover {
+            background-color: #5f0099;
+            /* Background color on hover */
+
+
+        }
+
+        @media all and (max-width:768px) {
+            .navbar {
+                display: none;
+            }
+        }
+
+        @media all and (min-width:768px) {
+            #toggle-button {
+                display: none;
+            }
+        }
+
+
+
+        toggle-button:hover {
+            color: #5f0099;
+
+        }
+
+        #menu ul a {
+            padding: 10px;
+
+        }
+
+        #menu ul {
+            border: 0 solid;
+            width: 560px;
+
+        }
+
+        #menu {
+            display:
+        }
+
+        /* CSS Styles */
+        footer {
+            background-color: lightgray;
+            color: #333;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .copyright {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .copyright p {
+            margin: 0;
+        }
+
+        /* Add your CSS styles here */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            width: 180px;
+            height: 97px;
+            border-radius: 10px;
+
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .closePopupButton {
+            text-align: center;
+        }
+
+        .card:hover {
+            background-color: darkslategrey;
+            color: white;
+        }
+
+        .card {
+            position: relative;
+
+            color: black;
+            background: transparent;
+            overflow: hidden;
+            border-top: 1px solid rgba(255, 49, 49, 0.5);
+            border-right: 1px solid rgba(0, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(57, 255, 20, 0.5);
+            border-left: 1px solid rgba(255, 255, 113, 0.5);
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0.5em;
+            float: right;
+            margin: 5px;
+
+        }
+
+        span {
+            position: absolute;
+            border-radius: 100vmax;
+        }
+
+        .top {
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 5px;
+            background: linear-gradient(90deg,
+                    transparent 50%,
+                    rgba(255, 49, 49, 0.5),
+                    rgb(255, 49, 49));
+        }
+
+        .bottom {
+            right: 0;
+            bottom: 0;
+            height: 5px;
+            background: linear-gradient(90deg,
+                    rgb(57, 255, 20),
+                    rgba(57, 255, 20, 0.5),
+                    transparent 50%);
+        }
+
+        .right {
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 0;
+            background: linear-gradient(180deg,
+                    transparent 30%,
+                    rgba(0, 255, 255, 0.5),
+                    rgb(0, 255, 255));
+        }
+
+        .left {
+            left: 0;
+            bottom: 0;
+            width: 5px;
+            height: 0;
+            background: linear-gradient(180deg,
+                    rgb(255, 255, 113),
+                    rgba(255, 255, 113, 0.5),
+                    transparent 70%);
+        }
+
+        .top {
+            animation: animateTop 3s ease-in-out infinite;
+        }
+
+        .bottom {
+            animation: animateBottom 3s ease-in-out infinite;
+        }
+
+        .right {
+            animation: animateRight 3s ease-in-out infinite;
+        }
+
+        .left {
+            animation: animateLeft 3s ease-in-out infinite;
+        }
+
+        @keyframes animateTop {
+            25% {
+                width: 100%;
+                opacity: 1;
+            }
+
+            30%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes animateBottom {
+
+            0%,
+            50% {
+                opacity: 0;
+                width: 0;
+            }
+
+            75% {
+                opacity: 1;
+                width: 100%;
+            }
+
+            76%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes animateRight {
+
+            0%,
+            25% {
+                opacity: 0;
+                height: 0;
+            }
+
+            50% {
+                opacity: 1;
+                height: 100%;
+            }
+
+            55%,
+            100% {
+                height: 100%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes animateLeft {
+
+            0%,
+            75% {
+                opacity: 0;
+                bottom: 0;
+                height: 0;
+            }
+
+            100% {
+                opacity: 1;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="toggle-button" style="text-align: right; margin: 15px; cursor: pointer;"> Menu☰</div>
+
+    <div class="navbar" id="menu" style="text-align: right;">
+
+        <a href="index.html" style="float: left;   font-size: 20px; ">𝓣𝓮𝓼𝓽 𝓬𝓱𝓪𝓵𝓵𝓮𝓷𝓰𝓮</a><br> <br>
+        <a href="index.html">Home</a>
+        <a href="#services" id="startTestButton">Tests</a>
+        <a href="Write_up_Answer%20Keys.pdf">Answer keys</a>
+
+        <a href="noti.pdf" download="Notice_CGLE_2023_03_04_2023">Notifications</a>
+        <a href="Revised_Calendar.pdf" download="Revised_Calendar">Ssc Calendar</a>
+        <a href="cgl.pdf" download="CGL_syllabus.pdf">Download syllabus</a>
+
+
+
+    </div>
+
+
+    <div id="testPopup" class="popup">
+        <div id="popupContent">
+            <!-- Your test content goes here -->
+        </div>
+        <div id="countdown"></div>
+        <div id="questionContainer" style="display: none;">
+            <!-- Questions will be added here dynamically -->
+        </div>
+
+        <script>
+            // Set the countdown start time in seconds
+            const countdownStart = 20; // Change this to your desired countdown time in seconds
+            let countdown = countdownStart;
+
+            const countdownDisplay = document.getElementById('countdown');
+            const questionContainer = document.getElementById('questionContainer');
+
+            function updateCountdown() {
+                if (countdown >= 0) {
+                    const minutes = Math.floor(countdown / 60);
+                    const seconds = countdown % 60;
+                    const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                    countdownDisplay.textContent = `Test Start in: ${formattedTime}`;
+                    countdown--;
+                } else {
+                    countdownDisplay.textContent = "Starting the test...";
+                    clearInterval(timerInterval);
+
+                    // Redirect to the test.html page after the countdown ends
+                    window.location.href = "test.html";
+                }
+            }
+
+            // Update the countdown initially and then every second
+            updateCountdown();
+            const timerInterval = setInterval(updateCountdown, 1000);
+        </script>
+
+
+        <button id="closePopupButton" class="closePopupButton">Close</button>
+    </div>
+    <div id="overlay" class="overlay"></div>
+    <script>
+        // Get the elements
+        const startTestButton = document.getElementById("startTestButton");
+        const testPopup = document.getElementById("testPopup");
+        const overlay = document.getElementById("overlay");
+        const closePopupButton = document.getElementById("closePopupButton");
+
+        // Function to open the popup
+        function openPopup() {
+            testPopup.style.display = "block";
+            overlay.style.display = "block";
+
+            // Replace the following line with your logic to open the new question and answer pages
+            // For example, you might use window.location.href to navigate to a new page
+            window.location.href = "test.html";
+        }
+
+        // Function to close the popup
+        function closePopup() {
+            testPopup.style.display = "none";
+            overlay.style.display = "none";
+        }
+
+        // Event listener to open the popup when "Start Test" button is clicked
+        startTestButton.addEventListener("click", openPopup);
+
+        // Event listener to close the popup when "Close" button is clicked
+        closePopupButton.addEventListener("click", closePopup);
+    </script>
+
+
+
+
+
+
+
+    <script>
+        // JavaScript to toggle the menu when the button is clicked
+        const button = document.getElementById('toggle-button');
+        const menu = document.getElementById('menu');
+
+        button.addEventListener('click', function() {
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+            }
+        });
+    </script>
+
+    <a href="https://ssc.nic.in/portal/apply">
+        <button class="card">Apply now
+            <span class="top"></span>
+            <span class="right"></span>
+            <span class="bottom"></span>
+            <span class="left"></span></button></a>
+
+    <div class="container mt-2">
+
+        <div class="row">
+            <div class="col-md-12" style="padding: 10px;">
+                <h1 style="text-align: center; padding-top: 15px; font-family: sans-serif;">SSC EXAMS</h1>
+                <p><strong style="font-size: 30px;">SSC CGL</strong>
+                <p>The SSC CGL (Staff Selection Commission Combined Graduate Level) examination is a competitive exam conducted by the Staff Selection Commission (SSC) in India. It is one of the most sought-after government job exams in the country and is conducted to recruit candidates for various Group B and Group C posts in various government ministries, departments, and organizations.</p>
+                <p><strong>Here are some details about the SSC CGL examination:</strong> </p>
+
+
+                <p>1.<strong> Eligibility Criteria:</strong></p>
+                <p>~ Educational Qualification: A candidate must have a Bachelor's Degree from a recognized university or institution. </p>
+                <p>~ Age Limit: The age limit varies depending on the specific post you are applying for. Generally, the minimum age is 18 years, and the maximum age is 30 years. Age relaxations are provided for candidates belonging to reserved categories.</p>
+
+                <p>2.<strong> Tiers of Examination:</strong></p>
+                <li>SSC CGL examination is conducted in four tiers:</li>
+                <ul>
+                    <li>Tier-I: Preliminary Examination (Objective Type)</li>
+                    <li>Tier-II: Main Examination (Objective Type)</li>
+                    <li>Tier-III: Descriptive Paper in English/Hindi (Pen and Paper mode)</li>
+                    <li>Tier-IV: Skill Test/Computer Proficiency Test (as applicable for certain posts)</li>
+                </ul>
+
+                <p>3.<strong> Subjects Covered:</strong></p>
+
+                <ul>
+                    <li>Tier-I: General Intelligence & Reasoning, General Awareness, Quantitative Aptitude, and English Comprehension.</li>
+                    <li>Tier-II: Paper-I (Quantitative Abilities), Paper-II (English Language & Comprehension), Paper-III (Statistics), Paper-IV (General Studies-Finance & Economics).</li>
+                    <li>Tier-III: Descriptive Paper in English/Hindi.</li>
+                    <li>Tier-IV: Skill Test/Computer Proficiency Test.
+                    </li>
+                </ul>
+
+                <p>4.<strong> Exam Pattern:</strong></p>
+
+                <ul>
+                    <li>Tier-I: 100 questions, 200 marks (2 hours)</li>
+                    <li>Tier-II: Varies depending on the paper.</li>
+                    <li>Tier-III: Descriptive paper, 100 marks (1 hour)</li>
+                    <li>Tier-IV: Skill Test/Computer Proficiency Test (varies based on the specific post)
+                    </li>
+                </ul>
+
+
+                <p>5.<strong> Selection Process::</strong></p>
+
+                <ul>
+                    <li>Candidates need to clear all four tiers of the examination.</li>
+                    <li>Candidates are shortlisted for Tier-III based on their performance in Tier-I and Tier-II.</li>
+                    <li>The final selection is based on the cumulative score of Tier-I, Tier-II, and Tier-III (if applicable).</li>
+                    <li>Tier-IV: Skill Test/Computer Proficiency Test (varies based on the specific post)
+                    </li>
+                </ul>
+
+                <p>6.<strong> Application Process:</strong></p>
+
+                <ul>
+                    <li>SSC CGL notification is released periodically, and candidates need to apply online through the SSC official website.
+                    </li>
+                </ul>
+
+                <p>7.<strong> Admit Card:</strong></p>
+
+                <ul>
+                    <li>Admit cards for each tier are released separately, and candidates can download them from the official website.
+                    </li>
+                </ul>
+
+                <p>8.<strong>Result and Cut-off:</strong></p>
+
+                <ul>
+                    <li>Results are declared for each tier separately, and cut-off marks are determined based on the number of vacancies and the performance of candidates.
+                    </li>
+                </ul>
+
+
+                <p>9.<strong> Pay Scale:</strong></p>
+
+                <ul>
+                    <li>The pay scale varies depending on the post. SSC CGL offers lucrative salary packages for various government jobs.
+                    </li>
+                </ul>
+
+                <p>10.<strong>Job Posts:</strong></p>
+
+                <ul>
+                    <li>SSC CGL exam qualifies candidates for a wide range of posts, including Assistant Audit Officer, Assistant Accounts Officer, Income Tax Inspector, Assistant Enforcement Officer, and many others.
+                    </li>
+                </ul>
+
+
+                <p>11.<strong>Preparation:</strong></p>
+
+                <ul>
+                    <li>Candidates often prepare for SSC CGL with the help of coaching institutes, self-study, and practice through previous year's question papers.
+                    </li>
+                </ul>
+
+                <p>12.<strong>Important Dates:</strong></p>
+
+                <ul>
+                    <li>The exam dates, application periods, and other important dates are mentioned in the official notification, which is released by SSC. <a href="https://ssc.nic.in/" style="text-decoration: none;">ssc.nic.in</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                <p> ©2023 Test-challenge. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript code
+        document.addEventListener("DOMContentLoaded", function() {
+            const copyrightElement = document.querySelector(".copyright p");
+            const currentYear = new Date().getFullYear();
+            copyrightElement.textContent = `© ${currentYear} Test-challenge. All rights reserved.`;
+        });
+    </script>
+</body></html>

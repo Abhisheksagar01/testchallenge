@@ -1,0 +1,188 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Student Page</title>
+</head>
+
+<body>
+    <h1>Student Page</h1>
+    <div id="question-list">
+        Questions will be displayed here
+    </div>
+
+
+    <button onclick="submitAnswers()">Submit Answers</button>
+
+    <a href="teacher.html">Go to Teacher Page</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+
+
+            function displayQuestions() {
+
+            }
+
+            function submitAnswers() {
+
+            }
+
+
+            function displayQuestions();
+
+
+        });
+    </script>
+</body>
+
+</html>-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Question Collector</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="questionCollector">
+        <h1>MCQ Question Collector</h1>
+        <input type="text" id="question" placeholder="Enter the question">
+        <input type="text" id="optionA" placeholder="Option A">
+        <input type="text" id="optionB" placeholder="Option B">
+        <input type="text" id="optionC" placeholder="Option C">
+        <input type="text" id="optionD" placeholder="Option D">
+        <input type="text" id="correctAnswer" placeholder="Correct Answer">
+        <button id="addQuestionButton">Add Question</button>
+    </div>
+
+    <div id="questionDisplay">
+        <h2>Questions Added:</h2>
+        <ul id="questionList"></ul>
+        <!-- Add a new button to clear all questions -->
+        <button id="clearQuestionsButton" style="text-align: start;">Clear All Questions</button>
+
+    </div>
+
+    <script>
+        // Get the elements
+        const questionInput = document.getElementById("question");
+        const optionAInput = document.getElementById("optionA");
+        const optionBInput = document.getElementById("optionB");
+        const optionCInput = document.getElementById("optionC");
+        const optionDInput = document.getElementById("optionD");
+        const correctAnswerInput = document.getElementById("correctAnswer");
+        const addQuestionButton = document.getElementById("addQuestionButton");
+        const questionList = document.getElementById("questionList");
+        const clearQuestionsButton = document.getElementById("clearQuestionsButton");
+
+        // Function to add a question to the display and store it in local storage
+        function addQuestionToDisplayAndStorage(question, options, correctAnswer) {
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `
+        <strong>Question:</strong> ${question}<br>
+        <strong>Options:</strong><br>
+        A. ${options[0]}<br>
+        B. ${options[1]}<br>
+        C. ${options[2]}<br>
+        D. ${options[3]}<br>
+        <strong>Correct Answer:</strong> ${correctAnswer}
+        <button class="deleteButton">Delete</button>
+    `;
+            questionList.appendChild(listItem);
+
+            // Add event listener for the delete button
+            const deleteButton = listItem.querySelector(".deleteButton");
+            deleteButton.addEventListener("click", () => {
+                questionList.removeChild(listItem);
+                updateLocalStorage();
+            });
+
+            // Store the question in local storage
+            const storedQuestions = getStoredQuestions();
+            storedQuestions.push({
+                question,
+                options,
+                correctAnswer
+            });
+            localStorage.setItem("questions", JSON.stringify(storedQuestions));
+        }
+
+        // Function to retrieve stored questions from local storage
+        function getStoredQuestions() {
+            const storedQuestions = localStorage.getItem("questions");
+            return storedQuestions ? JSON.parse(storedQuestions) : [];
+        }
+
+        // Function to update local storage after deleting a question
+        function updateLocalStorage() {
+            const questions = Array.from(questionList.children).map((listItem) => {
+                const questionText = listItem.querySelector("strong").textContent.split("Question: ")[1];
+                const options = Array.from(listItem.querySelectorAll("strong")).map((strong, index) => {
+                    if (index !== 0 && index !== 6) {
+                        return strong.textContent.split(". ")[1];
+                    }
+                }).filter(Boolean);
+                const correctAnswer = listItem.querySelector("strong:nth-child(7)").textContent.split("Correct Answer: ")[1];
+                return {
+                    question: questionText,
+                    options,
+                    correctAnswer
+                };
+            });
+            localStorage.setItem("questions", JSON.stringify(questions));
+        }
+
+        // Function to load stored questions and display them
+        function loadStoredQuestions() {
+            const storedQuestions = getStoredQuestions();
+            storedQuestions.forEach(({
+                question,
+                options,
+                correctAnswer
+            }) => {
+                addQuestionToDisplayAndStorage(question, options, correctAnswer);
+            });
+        }
+
+        // Event listener to add a question when the "Add Question" button is clicked
+        addQuestionButton.addEventListener("click", () => {
+            const question = questionInput.value;
+            const optionA = optionAInput.value;
+            const optionB = optionBInput.value;
+            const optionC = optionCInput.value;
+            const optionD = optionDInput.value;
+            const correctAnswer = correctAnswerInput.value;
+
+            // Create an array to store options
+            const options = [optionA, optionB, optionC, optionD];
+
+            // Add the question to the display and local storage
+            addQuestionToDisplayAndStorage(question, options, correctAnswer);
+
+            // Clear input fields after adding a question
+            questionInput.value = "";
+            optionAInput.value = "";
+            optionBInput.value = "";
+            optionCInput.value = "";
+            optionDInput.value = "";
+            correctAnswerInput.value = "";
+        });
+
+        // Event listener to clear all questions when the "Clear All Questions" button is clicked
+        clearQuestionsButton.addEventListener("click", () => {
+            localStorage.removeItem("questions");
+            questionList.innerHTML = "";
+        });
+
+
+        loadStoredQuestions && loadStoredQuestions();
+    </script>
+</body></html>

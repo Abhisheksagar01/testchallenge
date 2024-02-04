@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Teacher Page</title>
+</head>
+
+<body>
+    <h1>Teacher Page</h1>
+    <div class="question-form">
+        <label for="question">Question:</label>
+        <textarea id="question" rows="4" cols="50"></textarea><br>
+
+        <label for="options">Options:</label><br>
+        <input type="text" id="option1" placeholder="Option 1"><br>
+        <input type="text" id="option2" placeholder="Option 2"><br>
+        <input type="text" id="option3" placeholder="Option 3"><br>
+        <input type="text" id="option4" placeholder="Option 4"><br>
+
+        <label for="correct-answer">Correct Answer:</label>
+        <select id="correct-answer">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+        </select><br>
+
+        <button onclick="addQuestion()">Add Question</button>
+    </div>
+
+    <a href="student.html">Go to Student Page</a>
+
+    <script>
+        let questions = [];
+
+        function addQuestion() {
+            const question = document.getElementById('question').value;
+            const option1 = document.getElementById('option1').value;
+            const option2 = document.getElementById('option2').value;
+            const option3 = document.getElementById('option3').value;
+            const option4 = document.getElementById('option4').value;
+            const correctAnswer = document.getElementById('correct-answer').value;
+
+
+            const newQuestion = {
+                question: question,
+                options: [option1, option2, option3, option4],
+                correctAnswer: correctAnswer
+            };
+
+
+            questions.push(newQuestion);
+
+
+            document.getElementById('question').value = '';
+            document.getElementById('option1').value = '';
+            document.getElementById('option2').value = '';
+            document.getElementById('option3').value = '';
+            document.getElementById('option4').value = '';
+
+
+            alert('Question added successfully!');
+        }
+    </script>
+</body></html>
